@@ -16,7 +16,7 @@ var Clima = function () {
         // data en : http://api.jquery.com/jquery.ajax/
 
         //@TODO: realizar el ajax
-        $.reemplazameconalgo({
+        $.ajax({
             method: "POST",
             url: "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=44db6a862fba0b067b1930da0d769e98&units=metric&lang=es",
         }).done(function (data) {
@@ -28,7 +28,7 @@ var Clima = function () {
     self.init = function () {
 
         //@TODO: poner la clase del button para que funcione el click
-        $('').click(function(){
+        $('.btn-success').click(function(){
             self.buscoClimaPorCiudad(function(data){
                 // llamo un callback, una vez lista la llamada de datos para el clima
                 //@TODO: Popular con los datos recibidos, temperatura, maxima, minima y humedad
