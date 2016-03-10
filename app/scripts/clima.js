@@ -1,114 +1,54 @@
-var clima = function(){
-	var self = this;
-	 var player;
+var Clima = function () {
+    // Igualo la variable self a this (esta instancia)
+    var self = this;
 
-	self.init = function(){
-		$('.btn').click(self.buscoClimaPorCiudad);
-	};
+    // Creo una nueva instancia de la clase Player (mas abajo)
+    var player = new Player();
 
-	self.buscoClimaPorCiudad = function(){
-		// data en : http://www.w3schools.com/jquery/html_val.asp
-		//           http://www.w3schools.com/jsref/jsref_replace.asp
-		var ciudad = $('.form-control').val().replace(" ","%20");
 
-		// data en : http://api.jquery.com/jquery.ajax/
-		$.ajax({
-		  method: "POST",
-		  url: "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=44db6a862fba0b067b1930da0d769e98&units=metric&lang=es",
-		})
-		  .done(function( data ) {
-		  	/*
-				grnd_level:1024.88
-				humidity:60
-				pressure:1024.88
-				sea_level:1026.3
-				temp: 25.96
-				temp_max: 25.96
-				temp_min: 25.96
-		  	*/
 
-		  	// Populo con los datos recibidos
-		  	$('#temperatura').html(data.main.temp + " °");
-		  	$('#maxima').html(data.main.temp_max + " °");
-		  	$('#minima').html(data.main.temp_min + " °");
-		  	$('#humedad').html(data.main.humidity + " %");
-		  	$('#img_estado').attr('src', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
+    //@Method: Realiza una llamada ajax y en el "done" setea el html populando con los datos recibidos
+    self.buscoClimaPorCiudad = function (callback) {
+        // data en : http://www.w3schools.com/jquery/html_val.asp
+        //           http://www.w3schools.com/jsref/jsref_replace.asp
+        var ciudad = $('.form-control').val().replace(" ", "%20");
 
-		  	// Muestro el Panel
-		  	if (!$('paneles').is(':visible')){
-		    	$('.paneles').fadeIn('slow');
-		  	}
+        // data en : http://api.jquery.com/jquery.ajax/
 
-		  	//Diferentes tipos:
-		  	var idVideo;
+        //@TODO: realizar el ajax
+        $.reemplazameconalgo({
+            method: "POST",
+            url: "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=44db6a862fba0b067b1930da0d769e98&units=metric&lang=es",
+        }).done(function (data) {
+            callback(data);
+        });
+    };
 
-			switch(data.weather[0].main) {
-				case 'Thunderstorm':
-					idVideo = 'CsyLQUas4eM';
-				break;
+    // Init de la clase. Basicamente attacheo eventos del DOM necesarios para que funcione.
+    self.init = function () {
 
-				case 'Drizzle':
-					idVideo = 'oElmCxdiq1A';
-				break;
+        //@TODO: poner la clase del button para que funcione el click
+        $('').click(function(){
+            self.buscoClimaPorCiudad(function(data){
+                // llamo un callback, una vez lista la llamada de datos para el clima
+                //@TODO: Popular con los datos recibidos, temperatura, maxima, minima y humedad
+                $('#img_estado').attr('src', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
 
-				case 'Rain':
-					idVideo = 'GquEnoqZAK0';
-				break;
+                //Muestro el Panel
+                if (!$('paneles').is(':visible')) {
+                    $('.paneles').fadeIn('slow');
+                }
 
-				case 'Snow':
-					idVideo = 'fsmRppcAwjg';
-				break;
+                // Busco que ID de video me corresponde de acuerdo al clima.
+                var idVideo = player.switchVideo(data.weather[0].main);
 
-				case 'Atmosphere':
-					idVideo = 'vvbN-cWe0A0';
-				break;
+                //@TODO: chequeo si existe un player > Lo creo o sino cambio el video
+            });
+        });
+    };
 
-				case 'Clear':
-					idVideo = 'qREKP9oijWI';
-				break;
 
-				case 'Clouds':
-					idVideo = 'r1xohS2u69E';
-				break;
 
-				case 'Extreme':
-					idVideo = 'lCnTGe74Qf8';
-				break;
 
-				default:
-					idVideo = 'lQqSc2S_h1I';
-				break;
-			}
 
-			// Chequeo si existe un player > Lo creo o sino cambio el video
-			if ( typeof player === 'undefined' ) {
-		  		self.createYoutubePlayer(idVideo);
-			} else {
-				self.changeVideo(idVideo);
-			}
-		});
-	};
-
-	self.createYoutubePlayer = function(idVideo){
-	  // Replace the 'ytplayer' element with an <iframe> and
-	  // YouTube player after the API code downloads.
-	    player = new YT.Player('background_video', {
-	      height: '1024',
-	      width: '768',
-	      videoId: idVideo,
-	      controls: 0,
-	      modestbranding: 1,
-	      events: {
-		    'onReady': self.onPlayerReady,
-		  }
-	    });
-	};
-
-	self.changeVideo = function(idVideo){
-		player.loadVideoById(idVideo);
-	}
-
-	self.onPlayerReady = function(event) {
-		event.target.playVideo();
-	}
-}
+};

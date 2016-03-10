@@ -1,6 +1,6 @@
 var ciudadPage;
 
 $(document).ready(function(){
-	ciudadPage = new clima();
+	ciudadPage = new Clima();
 	ciudadPage.init();
 });
