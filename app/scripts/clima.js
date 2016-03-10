@@ -43,6 +43,9 @@ var Clima = function () {
                 var idVideo = player.switchVideo(data.weather[0].main);
 
                 //@TODO: chequeo si existe un player > Lo creo o sino cambio el video
+                if(player.hasCreatedVideo()) {
+
+                }
             });
         });
     };

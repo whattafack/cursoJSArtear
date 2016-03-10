@@ -1,6 +1,8 @@
 var Player = function () {
     var videoPlayer;
 
+    var self = this;
+
     //@Method: para crear un player de Youtube
     self.createYoutubePlayer = function (idVideo) {
         // Replace the 'ytplayer' element with an <iframe> and
