@@ -74,6 +74,8 @@ var Personaje = function (options){
   // Metodo de Ataque - Saco un random y lo retorno como puntos de ataque
   this.ataque = function(){
     var cantidadDanio = Math.floor(Math.random() * 10);
+    this.changeGraphic('ataque');
+    setTimeout(function(){this.changeGraphic('inactivo'),1000});
     return cantidadDanio;
   };
 
@@ -84,6 +86,7 @@ var Personaje = function (options){
       'estado': true,
       'cantidad': cantidadAguante
     };
+    this.changeGraphic('defensa');
   };
 
   // Metodo de cuando recibo un ataque
@@ -92,14 +95,14 @@ var Personaje = function (options){
   this.ouch = function(cantidad){
     if (this.estaDefendiendo.estado){
       cantidad = cantidad - this.estaDefendiendo.cantidadAguante;
-      this.vida-= cantidad;
       this.estaDefendiendo = {
         'estado': false,
         'cantidad': 0
       };
-    } else {
-      this.vida-= cantidad;
     }
+    this.changeGraphic('golpe');
+    setTimeout(function(){this.changeGraphic('inactivo'),1000});
+    this.sacaVida(cantidad);    
   };
 
   // Oculta todos los graficos y muestra el estado requerido
@@ -125,4 +128,18 @@ var Personaje = function (options){
         $('#personaje-' + this.idx + ' .inactivo').show();
     }
   };
+
+  // Saca vida en la Barra
+  this.sacaVida = function(cantidad){
+    var original = $($('.progress-bar-danger')[this.idx]).width();
+    $($('.progress-bar-danger')[this.idx]).width(original - cantidad);
+    this.vida-= cantidad;
+    
+    if(this.vida <= 0){
+      // SE MURIO!
+      $('#red').css('opacity','0.5');
+      this.changeGraphic('muerte');
+    }
+  }  
+
 };
