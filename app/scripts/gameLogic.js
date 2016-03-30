@@ -11,7 +11,7 @@ var optionsSamid = {
     'golpe': 'images/samid-golpe.gif',
     'muerte': 'images/samid-muerto.png'
   }
-}
+};
 
 
 
