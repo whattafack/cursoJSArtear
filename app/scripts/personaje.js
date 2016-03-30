@@ -75,7 +75,6 @@ var Personaje = function (options){
   this.ataque = function(){
     var cantidadDanio = Math.floor(Math.random() * 10);
     this.changeGraphic('ataque');
-    setTimeout(function(){this.changeGraphic('inactivo'),1000});
     return cantidadDanio;
   };
 
@@ -101,7 +100,6 @@ var Personaje = function (options){
       };
     }
     this.changeGraphic('golpe');
-    setTimeout(function(){this.changeGraphic('inactivo'),1000});
     this.sacaVida(cantidad);    
   };
 
@@ -126,6 +124,13 @@ var Personaje = function (options){
       break;
       default:
         $('#personaje-' + this.idx + ' .inactivo').show();
+    }
+    if (estado == 'golpe' || estado == 'ataque'){
+      var indx = this.idx;
+      setTimeout(function(){
+        $('#personaje-' + indx + ' div').hide();
+        $('#personaje-' + indx + ' .inactivo').show();
+      },1000);
     }
   };
 
