@@ -146,4 +146,8 @@ var Personaje = function (options){
       this.changeGraphic('muerte');
     }
   };
+
+  this.getVida = function() {
+    return this.vida;
+  };
 };
