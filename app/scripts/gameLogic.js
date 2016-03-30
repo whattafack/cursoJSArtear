@@ -20,3 +20,13 @@ $(document).ready(function(){
   samid = new Personaje(optionsSamid);
   samid.init();
 });
+
+
+/*
+Confirm para turnos:
+
+bootbox.confirm("Are you sure?", function(result) {
+  Example.show("Confirm result: "+result);
+}); 
+
+*/

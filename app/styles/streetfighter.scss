@@ -144,7 +144,7 @@ body {
 };
 
 .personaje {
-  #ataque, #defensa, #golpe, #muerte {
+  .ataque, .defensa, .golpe, .muerte {
     display: none;
   }
 }

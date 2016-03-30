@@ -1,17 +1,17 @@
-var templatePersonaje = '<div id="personaje1" class="personaje">\
-                <div id="ataque">\
+var templatePersonaje = '<div id="personaje-<%= id %>" class="personaje">\
+                <div class="ataque">\
                   <img src="<%= ataque %>" />\
                 </div>\
-                <div id="defensa">\
+                <div class="defensa">\
                   <img src="<%= defensa %>" />\
                 </div>\
-                <div id="inactivo">\
+                <div class="inactivo">\
                   <img src="<%= inactivo %>" />\
                 </div>\
-                <div id="golpe">\
+                <div class="golpe">\
                   <img src="<%= golpe %>" />\
                 </div>\
-                <div id="muerte">\
+                <div class="muerte">\
                   <img src="<%= muerte %>" />\
                 </div>\
               </div>';
@@ -55,6 +55,7 @@ var Personaje = function (options){
 
     // creo el template del personaje
     var charObject = {
+      id: this.idx,
       ataque: options.img.ataque,
       defensa: options.img.defensa,
       inactivo: options.img.inactivo,
@@ -99,6 +100,29 @@ var Personaje = function (options){
     } else {
       this.vida-= cantidad;
     }
-    
+  };
+
+  // Oculta todos los graficos y muestra el estado requerido
+  this.changeGraphic = function(estado){
+    $('#personaje-' + this.idx + ' div').hide();
+    switch (estado){
+      case 'ataque':
+        $('#personaje-' + this.idx + ' .ataque').show();
+      break;
+      case 'defensa':
+        $('#personaje-' + this.idx + ' .defensa').show();
+      break;
+      case 'inactivo':
+        $('#personaje-' + this.idx + ' .inactivo').show();
+      break;
+      case 'golpe':
+        $('#personaje-' + this.idx + ' .golpe').show();
+      break;
+      case 'muerte':
+        $('#personaje-' + this.idx + ' .muerte').show();
+      break;
+      default:
+        $('#personaje-' + this.idx + ' .inactivo').show();
+    }
   };
 };
