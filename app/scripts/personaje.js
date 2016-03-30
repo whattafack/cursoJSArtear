@@ -136,15 +136,14 @@ var Personaje = function (options){
 
   // Saca vida en la Barra
   this.sacaVida = function(cantidad){
-    var original = $($('.progress-bar-danger')[this.idx]).width();
-    $($('.progress-bar-danger')[this.idx]).width(original - cantidad);
     this.vida-= cantidad;
+
+    $($('.progress-bar-danger')[this.idx]).width(this.vida+'%');
     
     if(this.vida <= 0){
       // SE MURIO!
       $('#red').css('opacity','0.5');
       this.changeGraphic('muerte');
     }
-  }  
-
+  };
 };
