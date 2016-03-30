@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>cursojs clase3</title>
+    <title>cursojs clase final</title>
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
@@ -15,101 +15,52 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/streetfighter.css">
     <!-- endbuild -->
     
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    <script src="https://www.youtube.com/player_api";></script>
   </head>
   <body>
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div id="background_video"></div>
-    <div class="container">
-      <div class="header">
-        <h3 class="text-muted">Curso JS - Clase3</h3>
-      </div>
-
-      <div class="jumbotron">
-        <h1>Como esta el clima en mi ciudad?</h1>
-        <p class="lead">Ingrese en el input debajo, una ciudad deseada.</p>
-      </div>
-
+    <div class="bars">
       <div class="row">
-        <div class="col-lg-12">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="La ciudad que busco es...">
-            <span class="input-group-btn">
-              <button class="btn btn-success" type="button">Vamos!</button>
-            </span>
-          </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
-      </div><!-- /.row -->
-
-      <div class='paneles'>
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="bs-callout bs-callout-success">
-              <div class="heading">
-                Temperatura
-              </div>
-              <div class="body">
-                <h2 id="temperatura">12</h2>
-              </div>
+        <div class="col-lg-6">
+          <div class="progress">
+            <div class="progress-bar-danger right" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+              <p class="name">Player 1</p>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="bs-callout bs-callout-danger">
-              <div class="heading">
-                Temp. Máxima
-              </div>
-              <div class="body">
-                <h2 id="maxima">12</h2>
-              </div>
-            </div>
-          </div><!-- /.col-lg-3 -->
-          <div class="col-lg-3">
-            <div class="bs-callout bs-callout-info">
-              <div class="heading">
-                Temp. Mínima
-              </div>
-              <div class="body">
-                <h2 id="minima">12</h2>
-              </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="progress">
+            <div class="progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+              <p class="name">Player 2</p>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="bs-callout bs-callout-warning">
-              <div class="heading">
-                Humedad
-              </div>
-              <div class="body">
-                <h2 id="humedad">12</h2>
-              </div>
-            </div>
-          </div>
-        </div><!-- /.row -->
-        <h2><img id='img_estado' src=""></h2>
-      </div>
-
-
-      <div class="footer">
-        <p>Made with ♥ from the JS Course team</p>
+        </div>
       </div>
     </div>
-
+    
+    <div id="red"></div>
+    <div id="stage"></div>
+    <div id="characters"></div>
+    
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
+      <script src="/bower_components/jquery/dist/jquery.js"></script>
+      <script src="/bower_components/underscore/underscore.js"></script>
+      <script src="/bower_components/bootstrap/js/modal.js"></script>
+      <script src="/bower_components/bootbox.js/bootbox.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     
     <!-- build:js scripts/main.js -->
-    <script src="scripts/clima.js"></script>
-    <script src="scripts/main.js"></script>
+      <script src="scripts/gameLogic.js"></script>
+      <script src="scripts/personaje.js"></script>
     <!-- endbuild -->
   </body>
 </html>
