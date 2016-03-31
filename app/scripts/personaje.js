@@ -42,12 +42,14 @@ var Personaje = function (options){
 
   // ID de personaje
   this.idx = options.idx;
-  
+
   // si se defiende... Que porcentaje? Guardarlo a nivel global, temporalmente
   this.estaDefendiendo = {
     'estado': false,
     'cantidad': 0
-  }
+  };
+
+  this.cantidadDanio = 0;
 
   // Inicio del personaje
   this.init = function(){
@@ -67,15 +69,18 @@ var Personaje = function (options){
 
     // Lo appendeo
     $('#characters').append(charToy);
-    
+
   };
 
 
   // Metodo de Ataque - Saco un random y lo retorno como puntos de ataque
   this.ataque = function(){
-    var cantidadDanio = Math.floor(Math.random() * 10);
+    this.cantidadDanio = Math.floor(Math.random() * 10);
     this.changeGraphic('ataque');
-    return cantidadDanio;
+  };
+
+  this.resetDanio = function() {
+    this.cantidadDanio = 0;
   };
 
   // Metodo de Defensa - Saco un random y lo retorno como puntos de defensa
@@ -100,7 +105,7 @@ var Personaje = function (options){
       };
     }
     this.changeGraphic('golpe');
-    this.sacaVida(cantidad);    
+    this.sacaVida(cantidad);
   };
 
   // Oculta todos los graficos y muestra el estado requerido
@@ -139,7 +144,7 @@ var Personaje = function (options){
     this.vida-= cantidad;
 
     $($('.progress-bar-danger')[this.idx]).width(this.vida+'%');
-    
+
     if(this.vida <= 0){
       // SE MURIO!
       $('#red').css('opacity','0.5');
