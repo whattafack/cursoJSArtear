@@ -144,15 +144,26 @@ body {
 };
 
 .personaje {
+  position: absolute;
+  bottom: 0;
   .ataque, .defensa, .golpe, .muerte {
     display: none;
   }
+}
+
+div#personaje-0 {
+    left: 25%;
+}
+
+div#personaje-1 {
+    left: 50%;
 }
 
 div#characters {
   bottom: 20px;
   position: absolute;
   margin: 50px;
+  width: 100%;
   img { 
     // width: 300%;
     // height: 300%;
