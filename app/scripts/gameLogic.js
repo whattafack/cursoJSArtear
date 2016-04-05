@@ -26,41 +26,55 @@ var optionsMauro = {
 };
 
 var PlayerHandler = function (player1, player2) {
-  this.manageGame = function() {
+  this.manageGame = function () {
+    console.log(player1.getVida(), player2.getVida());
+    if (player1.getVida() > 0 && player2.getVida() > 0) {
 
-    //while (player1.getVida() > 0 && player2.getVida() > 0) {
-    for(var i = 0; i<4; i++) {
       if (player1.turno == true) {
-        doTurno(player1);
-        console.log(player1.personaje.cantidadDanio, player1.personaje.vida);
-        player2.reduce(player1.cantidadDanio);
-        player1.personaje.resetDanio();
-        player2.turno = true;
+        doTurno(player1, function () {
+          player1.turno = false;
+          player2.reduce(player1.getCantidadDanio());
+          player1.resetValor();
+          player2.turno = true;
+          //this.manageGame();
+          setTimeout(function () {
+            playerHandler.manageGame();
+          }, 2000);
+        });
       } else {
-        doTurno(player1);
-        player1.reduce(player2.personaje.cantidadDanio, player2.personaje.vida);
-        player2.personaje.resetDanio();
-        player1.turno = true;
+        doTurno(player2, function () {
+          player2.turno = false;
+          player1.reduce(player2.getCantidadDanio());
+          player2.resetValor();
+          player1.turno = true;
+          //this.manageGame();
+          setTimeout(function () {
+            playerHandler.manageGame();
+          }, 2000);
+        });
       }
+
     }
   }
 };
 
 
-function doTurno(personaje) {
-  launchOptions(function(res){
+function doTurno(personaje,callback) {
+
+  launchOptions(personaje, function(res){
     if(res === "ataque") {
-      console.log("personaje",personaje);
-      personaje.ataque();
+      personaje.callAtaque();
     } else {
-      personaje.defensa();
+      personaje.callDefensa();
     }
+    callback();
   });
+
 }
 
-function launchOptions(callback, personaje) {
+function launchOptions(personaje, callback) {
   bootbox.dialog({
-    message: "¿Qué queré hacer?" + personaje.nombre,
+    message: "¿Qué queré hacer?" + personaje.getNombre(),
     title: "Combate Space",
     onEscape: function() {
     },
@@ -81,21 +95,45 @@ var Player = function(optionPersonaje) {
 
   Player.prototype.turno = true;
 
-  this.personaje = new Personaje(optionPersonaje);
-  this.personaje.init();
+  var personaje = new Personaje(optionPersonaje);
 
-
+  personaje.init();
 
   this.getVida = function() {
-    return this.personaje.vida;
+    return personaje.vida;
   };
 
   this.reduce = function(cant) {
-    this.personaje.sacaVida(cant);
+    personaje.sacaVida(cant);
   };
+
+  this.getCantidadDanio = function() {
+    return personaje.cantidadDanio;
+  };
+
+  this.resetValor = function() {
+    personaje.resetDanio();
+  };
+
+  this.getNombre = function() {
+    return personaje.nombre;
+  };
+
+  this.callAtaque = function() {
+    personaje.ataque();
+  };
+
+  this.callDefensa = function() {
+    personaje.defensa();
+  };
+
 };
 
 // Init general
+var player1;
+var player2;
+var playerHandler;
+
 $(document).ready(function(){
 
   bootbox.dialog({
@@ -107,9 +145,9 @@ $(document).ready(function(){
     animate: true,
     buttons: {
       "Juegar": function() {
-        var player1 = new Player(optionsSamid);
-        var player2 = new Player(optionsMauro);
-        var playerHandler = new PlayerHandler(player1, player2);
+        player1 = new Player(optionsSamid);
+        player2 = new Player(optionsMauro);
+        playerHandler = new PlayerHandler(player1, player2);
 
         setTimeout(function() {
           playerHandler.manageGame();

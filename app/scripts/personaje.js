@@ -75,7 +75,7 @@ var Personaje = function (options){
 
   // Metodo de Ataque - Saco un random y lo retorno como puntos de ataque
   this.ataque = function(){
-    this.cantidadDanio = Math.floor(Math.random() * 10);
+    this.cantidadDanio = Math.floor(Math.random() * 30);
     this.changeGraphic('ataque');
   };
 
@@ -85,7 +85,7 @@ var Personaje = function (options){
 
   // Metodo de Defensa - Saco un random y lo retorno como puntos de defensa
   this.defensa = function(){
-    var cantidadAguante = Math.floor(Math.random() * 10);
+    var cantidadAguante = Math.floor(Math.random() * 15);
     this.estaDefendiendo = {
       'estado': true,
       'cantidad': cantidadAguante
